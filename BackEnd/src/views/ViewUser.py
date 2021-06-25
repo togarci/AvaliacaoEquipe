@@ -4,7 +4,6 @@ from src import db
 import datetime, jwt
 
 from src.model.user import User
-from src.model.user_groups import User_Groups
 from src.controller.ValidateFieldsRequest import ValidateFieldsRequest
 
 validate = ValidateFieldsRequest()
@@ -18,33 +17,28 @@ def registerUser():
     if not validateFields['status']:
         return jsonify({ "erro": validateFields['dataField'] }), 405
     
-    id_groups = User_Groups.query.filter_by(group_name=request.json['role']).first()
-
     try:
-        if id_groups:
-            user = User(
-                name=request.json['name'],
-                fk_id_user_group=id_groups.id, 
-                email=request.json['email'], 
-                password=request.json['password']
-            )
-            
-            db.session.add(user)
-            db.session.commit()
+        user = User(
+            name=request.json['name'],
+            role=request.json['role'], 
+            email=request.json['email'], 
+            password=request.json['password']
+        )
+        
+        db.session.add(user)
+        db.session.commit()
 
-            payload = {
-                "id": user.id,
-                "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-            }
-            
-            token = jwt.encode(payload, current_app.config['SECRET_KEY'])
-            
-            data = { "id_user": f'{user.id}', "status": "cadastro efetuado", "token": f'{token.decode("utf-8")}' }
+        payload = {
+            "id": user.id,
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+        }
+        
+        token = jwt.encode(payload, current_app.config['SECRET_KEY'])
+        
+        data = { "id_user": f'{user.id}', "status": "cadastro efetuado", "token": f'{token.decode("utf-8")}' }
 
-            return jsonify(data)
+        return jsonify(data)
 
-        else:
-            return jsonify({ "erro": "voce errou feio, errou rude !" })
 
     except Exception as e: 
         error = { 'erro': f'{e}' }

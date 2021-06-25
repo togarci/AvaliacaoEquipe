@@ -1,33 +1,34 @@
 from src.model.answer_user import Answer_User
 from src.model.user import User
-from src.model.type_skill import Type_Skill
-from src.model.question import Question
+from src.model.skill import Skill
+from src.model.answer import Answer
 
 class Answer_Serializer:
     def serial(self, answer):
-        user = User.query.filter_by(id=answer.fk_id_user).first()
-        question = Question.query.filter_by(id=answer.fk_id_question).first()
-        type_skill = Type_Skill.query.filter_by(id=question.fk_id_type_skill).first()
+        user_owner = User.query.filter_by(id=answer.id_user_owner).first()
+        user_answer = User.query.filter_by(id=answer.id_user_answer).first()
+        answerDescription = Answer.query.filter_by(id=answer.id_answer).first()
+        skill = Skill.query.filter_by(id=answerDescription.id_skill).first()
 
         data = {
-            "user": {
-                "id_user": user.id,
-                "name": user.name,
+            "user_owner": {
+                "id_user": user_owner.id,
+                "name": user_owner.name,
             },
-            "question": {
-                "id_question": question.id,
-                "question": question.question
+            "user_answer": {
+                "id_user": user_answer.id,
+                "name": user_answer.name,
             },
-            "type_skill": type_skill.type_skill,
-            "answer": answer.answer,
+            "skill": skill.name,
+            "answer": answerDescription.description,
             "created_at": answer.created_at
         }
 
         return data
 
-    def serializerAll(self):
+    def serializerAllBySprint(self, fk_id_sprint):
         data = []
-        answers = Answer_User.query.all()
+        answers = Answer_User.query.filter_by(id_sprint=fk_id_sprint).all()
 
         for answer in answers:
             data.append(self.serial(answer))
@@ -36,7 +37,7 @@ class Answer_Serializer:
 
     def serializerByUser(self, id_user):
         data = []
-        answers = Answer_User.query.filter_by(fk_id_user=id_user).all()
+        answers = Answer_User.query.filter_by(id_user_answer=id_user).all()
 
         for answer in answers:
             data.append(self.serial(answer))
