@@ -3,36 +3,17 @@
         <div class="content">
             <carousel @handleSubmit="salvaAutoAvaliacao">
                 <carousel-item>
-                    <card v-for="(pergunta, index) in perguntas.entrega" :key="index">
-                        <p>{{ `${index + 1} -  ${pergunta}` }}</p>
-                        <div class="row respostas">
-                            <el-radio v-for="(resposta, i) in respostas" v-model="dataEntrega[index]" :key="i" :label="resposta">{{ resposta }}</el-radio>
-                        </div>
-                    </card>
-                </carousel-item>
-                <carousel-item>
-                    <card v-for="(pergunta, index) in perguntas.autonomia" :key="index">
-                        <p>{{ `${index + 1} -  ${pergunta}` }}</p>
-                        <div class="row respostas">
-                            <el-radio v-for="(resposta, i) in respostas" v-model="dataAutonomia[index]" :key="i" :label="resposta">{{ resposta }}</el-radio>
-                        </div>
-                    </card>
-                </carousel-item>
-                <carousel-item>
-                    <card v-for="(pergunta, index) in perguntas.proatividade" :key="index">
-                        <p>{{ `${index + 1} -  ${pergunta}` }}</p>
-                        <div class="row respostas">
-                            <el-radio v-for="(resposta, i) in respostas" v-model="dataProatividade[index]" :key="i" :label="resposta">{{ resposta }}</el-radio>
-                        </div>
-                    </card>
-                </carousel-item>
-                <carousel-item>
-                    <card v-for="(pergunta, index) in perguntas.colaboracao" :key="index">
-                        <p>{{ `${index + 1} -  ${pergunta}` }}</p>
-                        <div class="row respostas">
-                            <el-radio v-for="(resposta, i) in respostas" v-model="dataColaboracao[index]" :key="i" :label="resposta">{{ resposta }}</el-radio>
-                        </div>
-                    </card>
+                    <template>
+                        <card>
+                            <p>Teste</p>
+                        </card>
+                        <!-- <card v-for="(pergunta, index) in perguntas.entrega" :key="index">
+                            <p>{{ `${index + 1} -  ${pergunta}` }}</p>
+                            <div class="row respostas">
+                                <el-radio v-for="(resposta, i) in respostas" v-model="dataEntrega[index]" :key="i" :label="resposta">{{ resposta }}</el-radio>
+                            </div>
+                        </card> -->
+                    </template>
                 </carousel-item>
             </carousel>
         </div>
@@ -56,61 +37,18 @@ export default {
     },
     data() {
         return {
-            dataEntrega: {
-                0: null,
-                1: null,
-                2: null
-            },
-            dataAutonomia: {
-                0: null,
-                1: null,
-                2: null
-            },
-            dataProatividade: {
-                0: null,
-                1: null,
-                2: null
-            },
-            dataColaboracao: {
-                0: null,
-                1: null,
-                2: null
-            }
+            dataResults: []
         }
     },
     methods: {
         validate() {
-            for(let value in this.dataEntrega) {
-                if (!this.dataEntrega[value]) {
-                    return false;
-                }
-            }
-            for(let value in this.dataAutonomia) {
-                if (!this.dataAutonomia[value]) {
-                    return false;
-                }
-            }
-            for(let value in this.dataProatividade) {
-                if (!this.dataProatividade[value]) {
-                    return false;
-                }
-            }
-            for(let value in this.dataColaboracao) {
-                if (!this.dataColaboracao[value]) {
-                    return false;
-                }
-            }
-
-            return true;
+            
         },
         salvaAutoAvaliacao() {
-            let isValid = this.validate();
-            if (isValid) {
-                console.log('passou');
-            } else {
-                alert('Verique se todas as perguntas foram respondidas')
-            }
         }
+    },
+    mounted() {
+        this.getSkillAnswers();
     }
 }
 </script>

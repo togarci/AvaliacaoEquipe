@@ -4,9 +4,7 @@ export class LoginService {
     constructor() {}
     
     login(data) {
-        let url = `http://localhost:8082/api/login`
-        axios.post(url, data).then(resp => {
-            console.log(resp);
-        })
+        let url = `users/login`;
+        return axios.post(url, data).then(resp => resp.data)
     }
 }

@@ -4,15 +4,15 @@
 			<i class="el-icon-s-home"></i>
 			<span slot="title">Início</span>
 		</el-menu-item>
-		<el-menu-item index="validacao">
+		<!-- <el-menu-item index="validacao">
 			<i class="el-icon-finished"></i>
 			<span slot="title">Validação</span>
-		</el-menu-item>
+		</el-menu-item> -->
 		<el-menu-item index="form">
 			<i class="el-icon-document"></i>
 			<span slot="title">Formulario</span>
 		</el-menu-item>
-		<el-menu-item index="4">
+		<el-menu-item index="login">
 			<i class="el-icon-switch-button"></i>
 			<span slot="title">Sair</span>
 		</el-menu-item>

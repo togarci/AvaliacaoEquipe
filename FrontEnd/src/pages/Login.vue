@@ -33,8 +33,12 @@ export default {
 	methods: {
 		login() {
 			serviceLogin.login(this.data)
-			.then(resp => console.log(resp))
-			.catch(erro => console.log(erro))
+			.then(resp => {
+				localStorage.setItem('jToken', resp.token);
+				this.$router.push({ name: 'home' })
+				this.$toasted.show('Login Success !');
+			})
+			.catch(erro => this.$toasted.show('Somethings wrond !'))
 		}
 	}
 }

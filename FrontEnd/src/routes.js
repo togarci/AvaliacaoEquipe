@@ -3,8 +3,7 @@ import Principal from '@/pages/Principal.vue';
 const routes = [
     {
         name: 'Menu',
-        path: '/',
-        redirect: '/home',
+        path: '/home',        
         component: Principal,
         children: [
             {
@@ -23,6 +22,11 @@ const routes = [
                 component: () => import('@/pages/Validation.vue')
             }
         ]
+    },
+    {
+        path: '/',
+        name: 'root',
+        redirect: '/login'
     },
     {
         path: '/login',
