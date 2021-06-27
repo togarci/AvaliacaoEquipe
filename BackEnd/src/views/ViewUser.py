@@ -4,6 +4,7 @@ from src import db
 import datetime, jwt
 
 from src.model.user import User
+from src.controller.Authenticate import jwt_required
 from src.controller.ValidateFieldsRequest import ValidateFieldsRequest
 
 validate = ValidateFieldsRequest()
@@ -72,3 +73,8 @@ def login():
     except Exception as e:
         error = { 'erro': f'{e}' }
         return jsonify({ "error": error })
+
+@bp.route('/validateToken', methods=['GET'])
+@jwt_required
+def validateToken(current_user):
+    return jsonify({ "status": "sucess" }), 200
